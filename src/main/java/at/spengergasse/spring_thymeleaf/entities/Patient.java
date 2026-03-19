@@ -1,34 +1,42 @@
 package at.spengergasse.spring_thymeleaf.entities;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
+@Table(name = "p_patients")
+@NoArgsConstructor
+@AllArgsConstructor
+@Data
 public class Patient {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    private String name;
+    @Column(name="p_svnr")
+    private String svnr;
+
+    @Column(name="p_surname")
+    private String surname;
+
+    @Column(name="p_firstname")
+    private String firstname;
+
+    @Column(name="p_birth")
     private LocalDate birth;
 
-    public String getName() {
-        return name;
-    }
+    @Column(name="p_gender")
+    private Character gender;
 
-    public void setName(String name) {
-        this.name = name;
-    }
+    @OneToMany(mappedBy = "patient")
+    private List<ReservationTime> reservationTimes = new ArrayList<>();
 
-    public LocalDate getBirth() {
-        return birth;
-    }
 
-    public void setBirth(LocalDate birth) {
-        this.birth = birth;
-    }
+
 }
