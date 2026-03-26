@@ -3,9 +3,45 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+
 </head>
 <body>
-<!--Container with  -->
+
+ <div class="container" >
+     <!-- Form with patient, modality, body region, date and Time and a comment section for different Information-->
+        <h1 class="text-center mt-5">Book a Reservation</h1>
+        <form id="reservationForm" >
+            <div class="mb-3">
+                <label for="patient" class="form-label">Patient</label>
+                <select class="form-select" id="patient" name="patient" required >
+                    <option value="">Select Patient</option>
+                </select>
+            </div>
+            <div class="mb-3">
+                <label for="modality" class="form-label">Modality</label>
+                <select class="form-select" id="modality" name="modality" required >
+                    <option value="">Select Modality</option>
+                </select>
+            </div>
+            <div class="mb-3">
+                <label for="bodyRegion" class="form-label">Body Region</label>
+                <input type="text" class="form-control" id="bodyRegion" name="bodyRegion" required placeholder="Body Region">
+            </div>
+            <div class="mb-3">
+                <label for="dateTime" class="form-label">Date and Time</label>
+                <input type="datetime-local" class="form-control" id="dateTime" name="dateTime" required>
+            </div>
+            <div class="mb-3">
+                <label for="comment" class="form-label">Comment</label>
+                <textarea class="form-control" id="comment" name="comment" rows="3"></textarea>
+            </div>
+            <button id="submitBtn" type="submit" class="btn btn-primary">Book Reservation</button>
+        </form>
+
+ </div>
 
 </body>
+<script src="JS/bookReservation.js"></script>
 </html>

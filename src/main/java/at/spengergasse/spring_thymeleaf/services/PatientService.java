@@ -1,17 +1,20 @@
 package at.spengergasse.spring_thymeleaf.services;
 
-import at.spengergasse.spring_thymeleaf.dto.PatientAddDTO;
+import at.spengergasse.spring_thymeleaf.dto.PatientRequest;
 import at.spengergasse.spring_thymeleaf.entities.Patient;
+import at.spengergasse.spring_thymeleaf.mappers.PatientMapper;
 import at.spengergasse.spring_thymeleaf.repositories.PatientRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestBody;
+
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
 public class PatientService {
     private final PatientRepository patientRepository;
+    private final PatientMapper patientMapper;
 
     public ResponseEntity<?> addPatient(Patient patient) {
         try {
@@ -22,4 +25,8 @@ public class PatientService {
         }
     }
 
+    public List<PatientRequest> getPatients() {
+        return patientRepository.findAll().stream()
+                .map(patientMapper::PatientToPatientDTO) .toList();
+    }
 }

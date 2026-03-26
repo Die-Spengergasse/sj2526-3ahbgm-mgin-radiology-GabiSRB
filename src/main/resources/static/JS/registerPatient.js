@@ -4,7 +4,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     document.getElementById("myForm").addEventListener("submit", (e) => {
         e.preventDefault();
-        const formData = new FormData(form);
+        const formData = new FormData(e.target);
 
        register(formData.get("socialNumber"), formData.get("surname"), formData.get("firstname"), formData.get("gender"), formData.get("dateOfBirth"));
     })

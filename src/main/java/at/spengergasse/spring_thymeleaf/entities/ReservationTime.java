@@ -24,8 +24,8 @@ public class ReservationTime {
     @Column(name="r_comment")
     private String comment;
 
-    @Column(name = "r_bodyregion")
-    private String bodyregion;
+    @Column(name = "r_body_region")
+    private String bodyRegion;
 
     @ManyToOne
     @JoinColumn(name="r_p_id", referencedColumnName = "p_id")
