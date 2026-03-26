@@ -16,8 +16,8 @@ public class Modality {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="m_description")
-    private String description;
+    @Column(name="m_id")
+    private Integer id;
 
     @Column(name="m_type")
     private String type;

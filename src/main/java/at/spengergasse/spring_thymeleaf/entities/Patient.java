@@ -14,12 +14,13 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-public class Patient {
+public class Patient{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    @Column(name="p_id")
+    private Integer id;
 
-    @Column(name="p_svnr")
+    @Column(name="p_svnr", unique = true)
     private String svnr;
 
     @Column(name="p_surname")

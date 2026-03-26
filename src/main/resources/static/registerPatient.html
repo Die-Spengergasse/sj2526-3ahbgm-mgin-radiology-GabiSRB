@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+
+</head>
+<body>
+    <!--container with a title and different input fields with social number surname, name, gender and date of birth -->
+    <div class="container">
+        <h1 class="text-center mt-5">Register Patient</h1>
+        <form id="myForm" >
+            <div class="mb-3">
+                <label for="socialNumber" class="form-label">Social Number</label>
+                <input type="text" class="form-control" id="socialNumber" name="socialNumber" required placeholder="Social Number">
+            </div>
+            <div class="mb-3">
+                <label for="surname" class="form-label">Surname</label>
+                <input type="text" class="form-control" id="surname" name="surname" required placeholder="Surname">
+            </div>
+            <div class="mb-3">
+                <label for="firstname" class="form-label">Firstname</label>
+                <input type="text" class="form-control" id="firstname" name="firstname" required placeholder="Firstname">
+            </div>
+            <div class="mb-3">
+                <label for="gender" class="form-label">Gender</label>
+                <select class="form-select" id="gender" name="gender" required >
+                    <option value="">Select gender</option>
+                    <option value="m">Male</option>
+                    <option value="f">Female</option>
+                    <option value="d">Other</option>
+                    </select>
+
+            </div>
+            <div class="mb-3">
+                <label for="dateOfBirth" class="form-label">Date of Birth</label>
+                <input type="date" class="form-control" id="dateOfBirth" name="dateOfBirth" required>
+            </div>
+            <button id="sumbitBtn" type="submit" class="btn btn-primary">Register</button>
+        </form>
+    </div>
+</body>
+<script src="JS/registerPatient.js"></script>
+</html>

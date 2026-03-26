@@ -1,26 +1,24 @@
 package at.spengergasse.spring_thymeleaf.controllers;
 
+import at.spengergasse.spring_thymeleaf.dto.PatientAddDTO;
 import at.spengergasse.spring_thymeleaf.entities.Patient;
 import at.spengergasse.spring_thymeleaf.repositories.PatientRepository;
+import at.spengergasse.spring_thymeleaf.services.PatientService;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequestMapping("/patient")
+@RequiredArgsConstructor
 public class PatientController {
-    private final PatientRepository patientRepository;
-
-    public PatientController(PatientRepository patientRepository) {
-        this.patientRepository = patientRepository;
-    }
+    private final PatientService patientService;
 
     @GetMapping("/list")
     public String patients(Model model) {
-        model.addAttribute("patients", patientRepository.findAll());
+
         return "patlist";
     }
 
@@ -31,8 +29,7 @@ public class PatientController {
     }
 
     @PostMapping("/add")
-    public String addPatient(@ModelAttribute("patient") Patient patient) {
-        patientRepository.save(patient);
-        return  "redirect:/patient/list";
+    public ResponseEntity<?> addPatient(@RequestBody Patient patient) {
+        return  patientService.addPatient(patient);
     }
 }
