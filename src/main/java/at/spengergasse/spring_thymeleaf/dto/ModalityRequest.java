@@ -13,5 +13,6 @@ import lombok.NoArgsConstructor;
 public class ModalityRequest {
     private Integer id;
     private String type;
+    private String description;
     private String location;
 }

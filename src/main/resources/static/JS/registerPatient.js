@@ -31,6 +31,7 @@ async function register(sn,surname,firstname,gender,date) {
 
       if (res.status === 200) {
         alert("Patient successfully added");
+        document.getElementById("myForm").reset();
       } else {
         alert("Failed to add patient");
       }

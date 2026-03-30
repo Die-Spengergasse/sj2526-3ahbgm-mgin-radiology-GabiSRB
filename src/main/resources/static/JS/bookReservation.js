@@ -4,9 +4,6 @@ let modalities = [];
 window.addEventListener("load", async ()=> {
     patients = await getPatients();
     modalities = await getModalities();
-
-    console.log(modalities);
-    console.log(patients);
     render();
 });
 
@@ -41,6 +38,7 @@ async function bookAppointment(patientId, modalityId,bodyRegion, comment, dateti
 
         if (res.status === 200) {
             alert("Appointment successfully booked");
+            document.getElementById("reservationForm").reset();
         } else {
             alert("Failed to book appointment");
         }
@@ -76,7 +74,7 @@ async function getModalities() {
 
 function render(){
     if(patients.length !==0){
-        document.getElementById("patient").innerHTML += patients.map(p => `<option value="${p.id}"> ${p.firstname},${p.surname}, ${p.svnr}, ${p.birth}, ${p.gender}</option>`).join("");
+        document.getElementById("patient").innerHTML += patients.map(p => `<option value="${p.id}">${p.firstname}, ${p.surname}, ${p.svnr}, ${p.birth}, ${p.gender}</option>`).join("");
 
     }
     if(modalities.length !== 0){

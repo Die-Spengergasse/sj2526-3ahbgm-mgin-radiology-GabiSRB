@@ -22,6 +22,9 @@ public class Modality {
     @Column(name="m_type")
     private String type;
 
+    @Column(name="m_description")
+    private String description;
+
     @Column(name="m_location")
     private String location;
 

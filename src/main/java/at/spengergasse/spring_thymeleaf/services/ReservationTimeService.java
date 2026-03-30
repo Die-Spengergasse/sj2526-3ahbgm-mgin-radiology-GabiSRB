@@ -1,6 +1,7 @@
 package at.spengergasse.spring_thymeleaf.services;
 
 import at.spengergasse.spring_thymeleaf.dto.ReservationAddDTO;
+import at.spengergasse.spring_thymeleaf.dto.ReservationDetailsDTO;
 import at.spengergasse.spring_thymeleaf.entities.ReservationTime;
 import at.spengergasse.spring_thymeleaf.repositories.ModalityRepository;
 import at.spengergasse.spring_thymeleaf.repositories.PatientRepository;
@@ -8,6 +9,9 @@ import at.spengergasse.spring_thymeleaf.repositories.ReservationTimeRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+
+import java.time.LocalDateTime;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -32,5 +36,23 @@ public class ReservationTimeService {
         } catch (Exception e) {
            return ResponseEntity.badRequest().body("Failed to save reservationTime: " + e.getMessage());
         }
+    }
+
+    public ResponseEntity<List<ReservationDetailsDTO>> getModalityReservation(String modality) {
+        try {
+            List<ReservationDetailsDTO> reservationDetails = reservationTimeRepository.findByModalityWithPatient(modality)
+                    .stream()
+                    .map(reservationTime -> new ReservationDetailsDTO(reservationTime.getPatient().getFirstname() + " " + reservationTime.getPatient().getSurname(),
+                            reservationTime.getPatient().getSvnr(),
+                            reservationTime.getBodyRegion(),
+                            reservationTime.getComment(),
+                         reservationTime.getReservationDate().format(java.time.format.DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm"))
+                    ))
+                    .toList();
+            return ResponseEntity.ok(reservationDetails);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().build();
+        }
+
     }
 }
