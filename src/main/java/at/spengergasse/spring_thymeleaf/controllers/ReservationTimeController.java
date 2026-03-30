@@ -1,4 +1,5 @@
 package at.spengergasse.spring_thymeleaf.controllers;
+import at.spengergasse.spring_thymeleaf.dto.RequestPatientByModalityDTO;
 import at.spengergasse.spring_thymeleaf.dto.ReservationAddDTO;
 import at.spengergasse.spring_thymeleaf.dto.ReservationDetailsDTO;
 import at.spengergasse.spring_thymeleaf.entities.ReservationTime;
@@ -20,8 +21,8 @@ public class ReservationTimeController {
         return reservationTimeService.addReservationTime(dto);
     }
 
-    @GetMapping("/{modality}")
-    public ResponseEntity<List<ReservationDetailsDTO>> getReservationTime(@PathVariable String modality) {
+    @PostMapping("/getPatients")
+    public ResponseEntity<List<ReservationDetailsDTO>> getReservationTime(@RequestBody RequestPatientByModalityDTO modality) {
         return reservationTimeService.getModalityReservation(modality);
     }
 

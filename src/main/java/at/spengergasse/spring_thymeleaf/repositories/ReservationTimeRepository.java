@@ -17,7 +17,7 @@ public interface ReservationTimeRepository extends JpaRepository<ReservationTime
         SELECT rt FROM ReservationTime rt
         JOIN FETCH rt.patient
         JOIN FETCH rt.modality
-        WHERE rt.modality.type = :modality
+        WHERE rt.modality.type = :modality and rt.modality.location = :location
         """)
-    List<ReservationTime> findByModalityWithPatient(@Param("modality") String modality);
+    List<ReservationTime> findByModalityWithPatient(@Param("modality") String modality, @Param("location") String location);
 }

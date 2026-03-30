@@ -38,14 +38,18 @@ function renderModal(details){
 
 }
 
-async function getReservations(modality){
-    document.getElementById("exampleModalLabel").textContent ="Reservations from " + modality.textContent;
-
-    const res = await fetch("/reservation/" + modality.textContent, {
-        method: "GET",
+async function getReservations(element){
+    const modality = {
+        type: element.getAttribute("data-type"),
+        location: element.getAttribute("data-location")
+    };
+    document.getElementById("exampleModalLabel").textContent ="Reservations from " + modality.type;
+    const res = await fetch("/reservation/getPatients", {
+        method: "POST",
         headers: {
             "Content-Type": "application/json",
-        }
+        },
+        body: JSON.stringify(modality),
     });
 
     if(res.ok){
@@ -58,7 +62,7 @@ function render() {
     const modalityBody = document.getElementById("modalityList");
     if(modalities.length !== 0){
         modalityBody.innerHTML += modalities.map( modality => `<tr>
-            <td><a onclick="getReservations(this)" href="#" data-bs-toggle="modal" data-bs-target="#reservationModal">${modality.type}</a></td>
+            <td><a onclick="getReservations(this)" data-type="${modality.type}" data-location="${modality.location}" href="#" data-bs-toggle="modal" data-bs-target="#reservationModal">${modality.type}</a></td>
             <td>${modality.description == null ? "" : modality.description}</td>
             <td>${modality.location}</td>
         </tr>`).join("");

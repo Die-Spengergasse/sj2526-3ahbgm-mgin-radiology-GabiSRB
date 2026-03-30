@@ -1,5 +1,6 @@
 package at.spengergasse.spring_thymeleaf.services;
 
+import at.spengergasse.spring_thymeleaf.dto.RequestPatientByModalityDTO;
 import at.spengergasse.spring_thymeleaf.dto.ReservationAddDTO;
 import at.spengergasse.spring_thymeleaf.dto.ReservationDetailsDTO;
 import at.spengergasse.spring_thymeleaf.entities.ReservationTime;
@@ -38,9 +39,9 @@ public class ReservationTimeService {
         }
     }
 
-    public ResponseEntity<List<ReservationDetailsDTO>> getModalityReservation(String modality) {
+    public ResponseEntity<List<ReservationDetailsDTO>> getModalityReservation(RequestPatientByModalityDTO modality) {
         try {
-            List<ReservationDetailsDTO> reservationDetails = reservationTimeRepository.findByModalityWithPatient(modality)
+            List<ReservationDetailsDTO> reservationDetails = reservationTimeRepository.findByModalityWithPatient(modality.getType(),modality.getLocation())
                     .stream()
                     .map(reservationTime -> new ReservationDetailsDTO(reservationTime.getPatient().getFirstname() + " " + reservationTime.getPatient().getSurname(),
                             reservationTime.getPatient().getSvnr(),
