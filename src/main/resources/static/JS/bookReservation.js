@@ -13,6 +13,7 @@ document.addEventListener("DOMContentLoaded", ()=> {
     document.getElementById("reservationForm").addEventListener("submit", (e) => {
         e.preventDefault();
         const formData = new FormData(e.target);
+        console.log(formData);
        bookAppointment(formData.get("patient"), formData.get("modality"),formData.get("bodyRegion"),formData.get("comment"), formData.get("dateTime"));
     });
 

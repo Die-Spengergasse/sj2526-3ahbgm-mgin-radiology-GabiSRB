@@ -29,7 +29,16 @@
             </div>
             <div class="mb-3">
                 <label for="bodyRegion" class="form-label">Body Region</label>
-                <input type="text" class="form-control" id="bodyRegion" name="bodyRegion" required placeholder="Body Region">
+                <!--<input type="text" class="form-control" id="bodyRegion" name="bodyRegion" required placeholder="Body Region">-->
+                <select class="form-select" id="bodyRegion" name="bodyRegion" required >
+                    <option value="">Select Body region</option>
+                    <option>Head</option>
+                    <option>Neck</option>
+                    <option>Trunk</option>
+                    <option>Back</option>
+                    <option>Upper Limb</option>
+                    <option>Lower Limb</option>
+                </select>
             </div>
             <div class="mb-3">
                 <label for="dateTime" class="form-label">Date and Time</label>
@@ -40,7 +49,7 @@
                 <textarea class="form-control" id="comment" name="comment" rows="3" placeholder="More information..."></textarea>
             </div>
             <button id="submitBtn" type="submit" class="btn btn-primary">Book Reservation</button>
-            <a href="/index.html" class="btn btn-primary">Zur Startseite</a>
+            <a href="/index.html" class="btn btn-primary">To Homepage</a>
         </form>
 
  </div>
