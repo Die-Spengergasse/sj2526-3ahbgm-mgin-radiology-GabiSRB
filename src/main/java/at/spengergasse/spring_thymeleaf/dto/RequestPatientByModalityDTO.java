@@ -5,11 +5,11 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Data
-@Builder
-@NoArgsConstructor
-@AllArgsConstructor
-public class RequestPatientByModalityDTO {
-    private String type;
-    private String location;
+
+public record RequestPatientByModalityDTO (
+        String type,
+        String location
+
+) {
+
 }

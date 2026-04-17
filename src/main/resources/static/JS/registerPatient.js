@@ -1,39 +1,45 @@
 
 document.addEventListener("DOMContentLoaded", () => {
-    const form = document.getElementById("myForm");
+
 
     document.getElementById("myForm").addEventListener("submit", (e) => {
         e.preventDefault();
         const formData = new FormData(e.target);
 
-       register(formData.get("socialNumber"), formData.get("surname"), formData.get("firstname"), formData.get("gender"), formData.get("dateOfBirth"));
+        register({
+            "firstname":formData.get("firstname"),
+            "surname":formData.get("surname"),
+            "svnr":formData.get("socialNumber"),
+            "gender":formData.get("gender"),
+            "birth":formData.get("dateOfBirth")
+        })
+
     })
 
 })
 
-async function register(sn,surname,firstname,gender,date) {
-    console.log(firstname,gender,date, sn, surname);
-    const data={
-        "firstname":firstname,
-        "surname":surname,
-        "svnr":sn,
-        "gender":gender,
-        "birth":date
-    }
+async function register(patient) {
+    document.querySelector("p.status").textContent="";
+
     try {
       const res = await fetch("patient/add", {
              method: "POST",
                 headers: {
                  "Content-Type": "application/json"
                 },
-             body: JSON.stringify(data)
+             body: JSON.stringify(patient)
            }).catch(e => console.log(e));
 
       if (res.status === 200) {
         alert("Patient successfully added");
         document.getElementById("myForm").reset();
       } else {
-        alert("Failed to add patient");
+        const errors =await res.json();
+
+        Object.entries(errors).forEach(([key,value]) => {
+           document.getElementById(key+"Status").textContent=value;
+        });
+
       }
     }
     catch (e) {

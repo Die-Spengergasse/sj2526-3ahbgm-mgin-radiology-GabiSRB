@@ -7,16 +7,15 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 
-@Data
-@Builder
-@NoArgsConstructor
-@AllArgsConstructor
-public class PatientRequest {
-    private Integer id;
-    private String firstname;
-    private String surname;
-    private Character gender;
-    private LocalDate birth;
-    private String svnr;
+
+public record PatientRequest (
+         Integer id,
+         String firstname,
+         String surname,
+         String gender,
+         LocalDate birth,
+         String svnr
+) {
+
 
 }

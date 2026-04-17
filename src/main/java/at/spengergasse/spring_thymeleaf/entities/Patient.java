@@ -34,7 +34,7 @@ public class Patient {
     private LocalDate birth;
 
     @Column(name="p_gender")
-    private Character gender;
+    private String gender;
 
     @OneToMany(mappedBy = "patient")
     private List<ReservationTime> reservationTimes = new ArrayList<>();

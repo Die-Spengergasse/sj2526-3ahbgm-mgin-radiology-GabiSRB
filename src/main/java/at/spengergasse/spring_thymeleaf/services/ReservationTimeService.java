@@ -3,7 +3,10 @@ package at.spengergasse.spring_thymeleaf.services;
 import at.spengergasse.spring_thymeleaf.dto.RequestPatientByModalityDTO;
 import at.spengergasse.spring_thymeleaf.dto.ReservationAddDTO;
 import at.spengergasse.spring_thymeleaf.dto.ReservationDetailsDTO;
+import at.spengergasse.spring_thymeleaf.entities.Modality;
+import at.spengergasse.spring_thymeleaf.entities.Patient;
 import at.spengergasse.spring_thymeleaf.entities.ReservationTime;
+import at.spengergasse.spring_thymeleaf.exceptionHandler.SomeValidationException;
 import at.spengergasse.spring_thymeleaf.repositories.ModalityRepository;
 import at.spengergasse.spring_thymeleaf.repositories.PatientRepository;
 import at.spengergasse.spring_thymeleaf.repositories.ReservationTimeRepository;
@@ -12,6 +15,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
@@ -22,25 +26,33 @@ public class ReservationTimeService {
 
     public ResponseEntity<?> addReservationTime(ReservationAddDTO dto)
     {
-        try {
+            Patient patient = patientRepository.findById(dto.patient()).orElseThrow();
+            Modality modality = modalityRepository.findById(dto.modality()).orElseThrow();
+
+            if(reservationTimeRepository.existsByModalityAndReservationDate(modality, dto.reservationDate().plusHours(1), dto.reservationDate().minusHours(1))) {
+                throw new SomeValidationException(Map.of("modality","This modality is already reserved at the given time. Please choose a different time or modality."));
+            }
+
+            if(patientRepository.existsByPatientAndReservationDate(patient, dto.reservationDate().plusHours(1), dto.reservationDate().minusHours(1))){
+                throw new SomeValidationException(Map.of("patient","This patient already has a reservation at the given time. Please choose a different time."));
+            }
+
             ReservationTime reservationTime = new ReservationTime();
-            reservationTime.setReservationDate(dto.getReservationDate());
-            reservationTime.setComment(dto.getComment());
-            reservationTime.setModality(modalityRepository.findById(dto.getModality()).orElseThrow());
-            reservationTime.setPatient(patientRepository.findById(dto.getPatient()).orElseThrow());
-            reservationTime.setBodyRegion(dto.getBodyRegion());
+            reservationTime.setReservationDate(dto.reservationDate());
+            reservationTime.setComment(dto.comment());
+            reservationTime.setModality(modality);
+            reservationTime.setPatient(patient);
+            reservationTime.setBodyRegion(dto.bodyRegion());
 
 
             reservationTimeRepository.save(reservationTime);
             return ResponseEntity.ok().build();
-        } catch (Exception e) {
-           return ResponseEntity.badRequest().body("Failed to save reservationTime: " + e.getMessage());
-        }
+
     }
 
     public ResponseEntity<List<ReservationDetailsDTO>> getModalityReservation(RequestPatientByModalityDTO modality) {
         try {
-            List<ReservationDetailsDTO> reservationDetails = reservationTimeRepository.findByModalityWithLocation(modality.getType(),modality.getLocation())
+            List<ReservationDetailsDTO> reservationDetails = reservationTimeRepository.findByModalityWithLocation(modality.type(),modality.location())
                     .stream()
                     .map(reservationTime -> new ReservationDetailsDTO(reservationTime.getPatient().getFirstname() + " " + reservationTime.getPatient().getSurname(),
                             reservationTime.getPatient().getSvnr(),

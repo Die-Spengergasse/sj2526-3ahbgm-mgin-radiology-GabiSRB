@@ -6,6 +6,12 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
 
+    <style>
+        p.status{
+            color: red;
+        }
+
+    </style>
 </head>
 <body>
     <!--container with a title and different input fields with social number surname, name, gender and date of birth -->
@@ -15,15 +21,18 @@
             <div class="mb-3">
                 <label for="socialNumber" class="form-label">Social Number</label>
                 <input type="text" class="form-control" id="socialNumber" name="socialNumber" required placeholder="Social Number">
+                <p class="status" id="svnrStatus"></p>
             </div>
 
             <div class="mb-3">
                 <label for="firstname" class="form-label">Firstname</label>
                 <input type="text" class="form-control" id="firstname" name="firstname" required placeholder="Firstname">
+                <p class="status" id="firstnameStatus"></p>
             </div>
             <div class="mb-3">
                 <label for="surname" class="form-label">Surname</label>
                 <input type="text" class="form-control" id="surname" name="surname" required placeholder="Surname">
+                <p class="status" id="surnameStatus"></p>
             </div>
             <div class="mb-3">
                 <label for="gender" class="form-label">Gender</label>
@@ -33,11 +42,13 @@
                     <option value="f">Female</option>
                     <option value="d">Divers</option>
                     </select>
+                <p class="status" id="genderStatus"></p>
 
             </div>
             <div class="mb-3">
                 <label for="dateOfBirth" class="form-label">Date of Birth</label>
                 <input type="date" class="form-control" id="dateOfBirth" name="dateOfBirth" required>
+                <p class="status" id="birthStatus"></p>
             </div>
             <button id="sumbitBtn" type="submit" class="btn btn-primary">Register</button>
             <a href="/index.html" class="btn btn-primary">To Homepage</a>

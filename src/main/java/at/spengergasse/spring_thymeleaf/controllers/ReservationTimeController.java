@@ -4,6 +4,7 @@ import at.spengergasse.spring_thymeleaf.dto.ReservationAddDTO;
 import at.spengergasse.spring_thymeleaf.dto.ReservationDetailsDTO;
 import at.spengergasse.spring_thymeleaf.entities.ReservationTime;
 import at.spengergasse.spring_thymeleaf.services.ReservationTimeService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -17,7 +18,7 @@ public class ReservationTimeController {
     private final ReservationTimeService reservationTimeService;
 
     @PostMapping("/add")
-    public ResponseEntity<?> addReservation(@RequestBody ReservationAddDTO dto) {
+    public ResponseEntity<?> addReservation(@Valid @RequestBody ReservationAddDTO dto) {
         return reservationTimeService.addReservationTime(dto);
     }
 

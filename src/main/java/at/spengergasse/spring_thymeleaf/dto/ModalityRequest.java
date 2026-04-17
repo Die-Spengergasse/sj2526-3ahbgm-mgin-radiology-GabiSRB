@@ -6,13 +6,11 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Data
-@Builder
-@NoArgsConstructor
-@AllArgsConstructor
-public class ModalityRequest {
-    private Integer id;
-    private String type;
-    private String description;
-    private String location;
+public record ModalityRequest (
+       Integer id,
+         String type,
+         String description,
+         String location
+) {
+
 }

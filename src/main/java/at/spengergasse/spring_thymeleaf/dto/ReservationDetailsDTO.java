@@ -7,15 +7,13 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
-@Data
-@Builder
-@NoArgsConstructor
-@AllArgsConstructor
-public class ReservationDetailsDTO {
-    private String patientname;
-    private String patientsvnr;
-    private String bodyregion;
-    private String comment;
-    private String date;
 
+public record ReservationDetailsDTO (
+         String patientname,
+         String patientsvnr,
+         String bodyregion,
+         String comment,
+         String date
+
+){
 }
