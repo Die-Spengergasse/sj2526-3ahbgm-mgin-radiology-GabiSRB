@@ -19,16 +19,17 @@ document.addEventListener("DOMContentLoaded", () => {
 })
 
 async function register(patient) {
-    document.querySelector("p.status").textContent="";
+    document.querySelectorAll("p.status").forEach(p => p.textContent = "");
 
     try {
+
       const res = await fetch("patient/add", {
              method: "POST",
                 headers: {
                  "Content-Type": "application/json"
                 },
              body: JSON.stringify(patient)
-           }).catch(e => console.log(e));
+           });
 
       if (res.status === 200) {
         alert("Patient successfully added");

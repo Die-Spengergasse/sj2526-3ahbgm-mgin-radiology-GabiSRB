@@ -14,6 +14,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -26,17 +27,22 @@ public class ReservationTimeService {
 
     public ResponseEntity<?> addReservationTime(ReservationAddDTO dto)
     {
+        Map<String, String> errors = new HashMap<>();
             Patient patient = patientRepository.findById(dto.patient()).orElseThrow();
             Modality modality = modalityRepository.findById(dto.modality()).orElseThrow();
 
             if(reservationTimeRepository.existsByModalityAndReservationDate(modality, dto.reservationDate().plusHours(1), dto.reservationDate().minusHours(1))) {
-                throw new SomeValidationException(Map.of("modality","This modality is already reserved at the given time. Please choose a different time or modality."));
+              errors.put("modality","This modality is already reserved at the given time. Please choose a different time or modality.");
             }
 
-            if(patientRepository.existsByPatientAndReservationDate(patient, dto.reservationDate().plusHours(1), dto.reservationDate().minusHours(1))){
-                throw new SomeValidationException(Map.of("patient","This patient already has a reservation at the given time. Please choose a different time."));
+            if(reservationTimeRepository.existsByPatientAndReservationDate(patient, dto.reservationDate().plusHours(1), dto.reservationDate().minusHours(1))){
+              errors.put("patient","This patient already has a reservation at the given time. Please choose a different time.");
             }
 
+            if(!errors.isEmpty())
+            {
+                throw new SomeValidationException(errors);
+            }
             ReservationTime reservationTime = new ReservationTime();
             reservationTime.setReservationDate(dto.reservationDate());
             reservationTime.setComment(dto.comment());

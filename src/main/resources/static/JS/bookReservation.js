@@ -13,7 +13,7 @@ document.addEventListener("DOMContentLoaded", ()=> {
     document.getElementById("reservationForm").addEventListener("submit", (e) => {
         e.preventDefault();
         const formData = new FormData(e.target);
-        console.log(formData);
+
        bookAppointment(formData.get("patient"), formData.get("modality"),formData.get("bodyRegion"),formData.get("comment"), formData.get("dateTime"));
     });
 
@@ -21,6 +21,7 @@ document.addEventListener("DOMContentLoaded", ()=> {
 });
 
 async function bookAppointment(patientId, modalityId,bodyRegion, comment, datetime) {
+    document.querySelectorAll("p.status").forEach(p => p.textContent = "");
     const data = {
         "patient": patientId,
         "modality": modalityId,
@@ -29,6 +30,7 @@ async function bookAppointment(patientId, modalityId,bodyRegion, comment, dateti
         "reservationDate": datetime,
     }
     try {
+
         const res = await fetch("/reservation/add", {
             method: "POST",
             headers: {
@@ -41,7 +43,10 @@ async function bookAppointment(patientId, modalityId,bodyRegion, comment, dateti
             alert("Appointment successfully booked");
             document.getElementById("reservationForm").reset();
         } else {
-            alert("Failed to book appointment");
+            const errors =await res.json();
+            Object.entries(errors).forEach(([key,value]) => {
+                document.getElementById(key+"Status").textContent=value;
+            });
         }
     }
     catch (e) {

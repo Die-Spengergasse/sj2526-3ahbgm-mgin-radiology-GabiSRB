@@ -1,6 +1,7 @@
 package at.spengergasse.spring_thymeleaf.repositories;
 
 import at.spengergasse.spring_thymeleaf.entities.Modality;
+import at.spengergasse.spring_thymeleaf.entities.Patient;
 import at.spengergasse.spring_thymeleaf.entities.ReservationTime;
 import jakarta.validation.constraints.FutureOrPresent;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -32,4 +33,14 @@ public interface ReservationTimeRepository extends JpaRepository<ReservationTime
           AND rt.reservationDate > :newStartMinusOneHour
     """)
     boolean existsByModalityAndReservationDate(Modality modality, @FutureOrPresent LocalDateTime newEnd, @FutureOrPresent LocalDateTime newStartMinusOneHour);
+
+    @Query("""
+        SELECT CASE WHEN COUNT(rt) > 0 THEN true ELSE false END
+        FROM ReservationTime rt
+        WHERE rt.patient = :patient
+          AND rt.reservationDate < :newEnd
+          AND rt.reservationDate > :newStartMinusOneHour
+    """)
+    boolean existsByPatientAndReservationDate(Patient patient, @FutureOrPresent LocalDateTime newEnd, @FutureOrPresent LocalDateTime newStartMinusOneHour);
+
 }
