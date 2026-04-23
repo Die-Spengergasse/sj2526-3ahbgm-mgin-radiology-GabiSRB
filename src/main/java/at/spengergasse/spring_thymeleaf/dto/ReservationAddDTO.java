@@ -19,7 +19,7 @@ public record ReservationAddDTO (
          @NotBlank
          String bodyRegion,
          String comment,
-         @FutureOrPresent
+         @FutureOrPresent(message = "Birth date must be in the Future or present")
          LocalDateTime reservationDate
 ){
 

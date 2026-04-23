@@ -31,11 +31,11 @@ public class ReservationTimeService {
             Patient patient = patientRepository.findById(dto.patient()).orElseThrow();
             Modality modality = modalityRepository.findById(dto.modality()).orElseThrow();
 
-            if(reservationTimeRepository.existsByModalityAndReservationDate(modality, dto.reservationDate().plusHours(1), dto.reservationDate().minusHours(1))) {
+            if(reservationTimeRepository.existsByModalityAndReservationDate(modality, dto.reservationDate().plusHours(2), dto.reservationDate().minusHours(2))) {
               errors.put("modality","This modality is already reserved at the given time. Please choose a different time or modality.");
             }
 
-            if(reservationTimeRepository.existsByPatientAndReservationDate(patient, dto.reservationDate().plusHours(1), dto.reservationDate().minusHours(1))){
+            if(reservationTimeRepository.existsByPatientAndReservationDate(patient, dto.reservationDate().plusHours(2), dto.reservationDate().minusHours(2))){
               errors.put("patient","This patient already has a reservation at the given time. Please choose a different time.");
             }
 
@@ -66,6 +66,7 @@ public class ReservationTimeService {
                             reservationTime.getComment(),
                          reservationTime.getReservationDate().format(java.time.format.DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm"))
                     ))
+                    .sorted((java.util.Comparator.comparing(ReservationDetailsDTO::date)))
                     .toList();
             return ResponseEntity.ok(reservationDetails);
         } catch (Exception e) {

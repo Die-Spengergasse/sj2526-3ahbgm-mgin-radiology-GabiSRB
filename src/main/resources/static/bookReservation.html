@@ -46,14 +46,17 @@
                     <option>Upper Limb</option>
                     <option>Lower Limb</option>
                 </select>
+                <p class="status" id="bodyRegionStatus"></p>
             </div>
             <div class="mb-3">
                 <label for="dateTime" class="form-label">Date and Time</label>
                 <input type="datetime-local" class="form-control" id="dateTime" name="dateTime" required>
+                <p class="status" id="reservationDateStatus"></p>
             </div>
             <div class="mb-3">
                 <label for="comment" class="form-label">Comment</label>
                 <textarea class="form-control" id="comment" name="comment" rows="3" placeholder="More information..."></textarea>
+                <p class="status" id="commentStatus"></p>
             </div>
             <button id="submitBtn" type="submit" class="btn btn-primary">Book Reservation</button>
             <a href="/index.html" class="btn btn-primary">To Homepage</a>
