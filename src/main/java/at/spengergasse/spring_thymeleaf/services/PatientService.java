@@ -18,13 +18,11 @@ public class PatientService {
     private final PatientRepository patientRepository;
     private final PatientMapper patientMapper;
 
-    public ResponseEntity<?> addPatient(PatientAddRequest patient) {
+    public void addPatient(PatientAddRequest patient) {
             if(patientRepository.existsBySvnr(patient.svnr())) {
                 throw new SomeValidationException(Map.of("svnr","Patient with SVNR " + patient.svnr() + " already exists"));
             }
             patientRepository.save(patientMapper.toEntity(patient));
-            return ResponseEntity.ok().body("Patient added successfully");
-
     }
 
     public List<PatientRequest> getPatients() {

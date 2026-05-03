@@ -17,12 +17,13 @@ public class PatientController {
     private final PatientService patientService;
 
     @GetMapping("/getAll")
-    public List<PatientRequest> patients() {
-        return  patientService.getPatients();
+    public ResponseEntity<List<PatientRequest>> patients() {
+        return  ResponseEntity.ok().body(patientService.getPatients());
     }
 
     @PostMapping("/add")
-    public ResponseEntity<?> addPatient(@Valid @RequestBody PatientAddRequest patient) {
-        return  patientService.addPatient(patient);
+    public ResponseEntity<String> addPatient(@Valid @RequestBody PatientAddRequest patient) {
+        patientService.addPatient(patient);
+        return ResponseEntity.ok().body("Patient added successfully");
     }
 }

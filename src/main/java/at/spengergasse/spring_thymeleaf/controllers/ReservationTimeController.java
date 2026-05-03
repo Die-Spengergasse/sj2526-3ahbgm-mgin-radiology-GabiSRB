@@ -18,13 +18,14 @@ public class ReservationTimeController {
     private final ReservationTimeService reservationTimeService;
 
     @PostMapping("/add")
-    public ResponseEntity<?> addReservation(@Valid @RequestBody ReservationAddDTO dto) {
-        return reservationTimeService.addReservationTime(dto);
+    public ResponseEntity<String> addReservation(@Valid @RequestBody ReservationAddDTO dto) {
+        reservationTimeService.addReservationTime(dto);
+        return ResponseEntity.ok().body("Reservation has been added");
     }
 
     @PostMapping("/getPatients")
     public ResponseEntity<List<ReservationDetailsDTO>> getReservationTime(@RequestBody RequestPatientByModalityDTO modality) {
-        return reservationTimeService.getModalityReservation(modality);
+        return ResponseEntity.ok().body(reservationTimeService.getModalityReservation(modality));
     }
 
 }

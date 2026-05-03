@@ -25,7 +25,7 @@ public class ReservationTimeService {
     private final ModalityRepository modalityRepository;
     private final PatientRepository patientRepository;
 
-    public ResponseEntity<?> addReservationTime(ReservationAddDTO dto)
+    public void addReservationTime(ReservationAddDTO dto)
     {
         Map<String, String> errors = new HashMap<>();
             Patient patient = patientRepository.findById(dto.patient()).orElseThrow();
@@ -52,26 +52,21 @@ public class ReservationTimeService {
 
 
             reservationTimeRepository.save(reservationTime);
-            return ResponseEntity.ok().build();
 
     }
 
-    public ResponseEntity<List<ReservationDetailsDTO>> getModalityReservation(RequestPatientByModalityDTO modality) {
-        try {
-            List<ReservationDetailsDTO> reservationDetails = reservationTimeRepository.findByModalityWithLocation(modality.type(),modality.location())
+    public List<ReservationDetailsDTO> getModalityReservation(RequestPatientByModalityDTO modality) {
+
+            return reservationTimeRepository.findByModalityWithLocation(modality.type(),modality.location())
                     .stream()
                     .map(reservationTime -> new ReservationDetailsDTO(reservationTime.getPatient().getFirstname() + " " + reservationTime.getPatient().getSurname(),
                             reservationTime.getPatient().getSvnr(),
                             reservationTime.getBodyRegion(),
                             reservationTime.getComment(),
-                         reservationTime.getReservationDate().format(java.time.format.DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm"))
+                            reservationTime.getReservationDate().format(java.time.format.DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm"))
                     ))
                     .sorted((java.util.Comparator.comparing(ReservationDetailsDTO::date)))
                     .toList();
-            return ResponseEntity.ok(reservationDetails);
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().build();
-        }
 
     }
 }

@@ -4,6 +4,7 @@ import at.spengergasse.spring_thymeleaf.dto.ModalityRequest;
 import at.spengergasse.spring_thymeleaf.entities.Modality;
 import at.spengergasse.spring_thymeleaf.services.ModalityService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -18,7 +19,7 @@ public class ModalityController {
     private final ModalityService modalityService;
 
     @GetMapping("/getAll")
-    public List<ModalityRequest> getModalities() {
-        return modalityService.getModalities();
+    public ResponseEntity<List<ModalityRequest>> getModalities() {
+        return ResponseEntity.ok().body(modalityService.getModalities());
     }
 }

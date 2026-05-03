@@ -7,7 +7,6 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 @Entity
@@ -39,6 +38,8 @@ public class Patient {
     @OneToMany(mappedBy = "patient")
     private List<ReservationTime> reservationTimes = new ArrayList<>();
 
-
+    public static Patient TestPatient(){
+        return new Patient(999, "123456789", "Mustermann", "Max", LocalDate.of(1990,1,1), "M", new ArrayList<>());
+    }
 
 }
